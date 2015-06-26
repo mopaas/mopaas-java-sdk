@@ -25,6 +25,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.mopaas.sdk.MoPaaSClient;
+import com.mopaas.sdk.utils.UrlCodingUtils;
 import com.mopaas.sdk.vo.MoPaaSInVo;
 import com.mopaas.sdk.vo.MoPaaSOutVo;
 
@@ -33,7 +34,7 @@ import com.mopaas.sdk.vo.MoPaaSOutVo;
  * @author YeFeng Shen<yfshen@anchora.me>
  * 
  */
-public class MoPaaSBaseClientTest {
+public class MoPaaSServiceClientTest {
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
@@ -54,10 +55,10 @@ public class MoPaaSBaseClientTest {
     MoPaaSClient client = MoPaaSClient.newClient("968f6de8-117b-4236-b10e-25e790a198b7", "1c2c4861-ca1e-4f05-97b8-e7d5a4f2d232");
 
     @Test
-    public void testDomainList() {
+    public void testServiceTypeList() {
         MoPaaSInVo in = new MoPaaSInVo();
         in.setMethod("GET");
-        in.setUri("/api/v2/base/domain/list");
+        in.setUri("/api/v2/service/type/list");
         
         MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
 
@@ -67,10 +68,23 @@ public class MoPaaSBaseClientTest {
     }
 
     @Test
-    public void testCreateDomain() {
+    public void testServicePlanList() {
         MoPaaSInVo in = new MoPaaSInVo();
         in.setMethod("GET");
-        in.setUri("/api/v2/base/domain/bejson.com/create");
+        in.setUri("/api/v2/service/plan/MySQL/list");
+        
+        MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
+
+        Assert.assertEquals("API_0", out.getCode());
+        Assert.assertNotNull(out.getList());
+        Assert.assertNull(out.getResult());
+    }
+
+    @Test
+    public void testServiceCreate() {
+        MoPaaSInVo in = new MoPaaSInVo();
+        in.setMethod("GET");
+        in.setUri("/api/v2/service/MySQL/mysql0626/" + UrlCodingUtils.encodeBase64("MySQL 125M".getBytes()) + "/create");
         
         MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
 
@@ -78,86 +92,60 @@ public class MoPaaSBaseClientTest {
     }
 
     @Test
-    public void testDeleteDomain() {
+    public void testServiceUpgrade() {
+        MoPaaSInVo in = new MoPaaSInVo();
+        in.setMethod("GET");
+        in.setUri("/api/v2/service/mysql0626/" + UrlCodingUtils.encodeBase64("MySQL 250M".getBytes()) + "/upgrade");
+        
+        MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
+
+        Assert.assertEquals("API_0", out.getCode());
+    }
+
+    @Test
+    public void testServiceInstanceList() {
+        MoPaaSInVo in = new MoPaaSInVo();
+        in.setMethod("GET");
+        in.setUri("/api/v2/service/list");
+        
+        MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
+
+        Assert.assertEquals("API_0", out.getCode());
+        Assert.assertNotNull(out.getList());
+        Assert.assertNull(out.getResult());
+
+    }
+
+    @Test
+    public void testServiceBind() {
+        MoPaaSInVo in = new MoPaaSInVo();
+        in.setMethod("GET");
+        in.setUri("/api/v2/service/php0609/mysql0626/bind");
+        
+        MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
+
+        Assert.assertEquals("API_0", out.getCode());
+    }
+
+    @Test
+    public void testServiceUnbind() {
+        MoPaaSInVo in = new MoPaaSInVo();
+        in.setMethod("GET");
+        in.setUri("/api/v2/service/php0609/mysql0626/unbind");
+        
+        MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
+
+        Assert.assertEquals("API_0", out.getCode());
+    }
+
+    @Test
+    public void testServiceDelete() {
         MoPaaSInVo in = new MoPaaSInVo();
         in.setMethod("DELETE");
-        in.setUri("/api/v2/base/domain/bejson.com/");
+        in.setUri("/api/v2/service/mysql0626");
         
         MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
 
         Assert.assertEquals("API_0", out.getCode());
     }
-
-    @Test
-    public void testQuota() {
-        MoPaaSInVo in = new MoPaaSInVo();
-        in.setMethod("GET");
-        in.setUri("/api/v2/base/quota");
-        
-        MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
-
-        Assert.assertEquals("API_0", out.getCode());
-        Assert.assertNotNull(out.getResult());
-    }
-
-    @Test
-    public void testUserLogsAll() {
-        MoPaaSInVo in = new MoPaaSInVo();
-        in.setMethod("GET");
-        in.setUri("/api/v2/base/logs/all");
-        
-        MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
-
-        Assert.assertEquals("API_0", out.getCode());
-        Assert.assertNotNull(out.getList());
-    }
-
-    @Test
-    public void testUserLogs() {
-        MoPaaSInVo in = new MoPaaSInVo();
-        in.setMethod("GET");
-        in.setUri("/api/v2/base/logs/php0609");
-        
-        MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
-
-        Assert.assertEquals("API_0", out.getCode());
-        Assert.assertNotNull(out.getList());
-    }
-
-    @Test
-    public void testUserLogsWithPage() {
-        MoPaaSInVo in = new MoPaaSInVo();
-        in.setMethod("GET");
-        in.setUri("/api/v2/base/logs/all/page/1/3");
-        
-        MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
-
-        Assert.assertEquals("API_0", out.getCode());
-        Assert.assertNotNull(out.getList());
-    }
-
-    @Test
-    public void testUserLogsWithDate() {
-        MoPaaSInVo in = new MoPaaSInVo();
-        in.setMethod("GET");
-        in.setUri("/api/v2/base/logs/all/date/2015-01-01/2015-06-30");
-        
-        MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
-
-        Assert.assertEquals("API_0", out.getCode());
-        Assert.assertNotNull(out.getList());
-    }
-
-    @Test
-    public void testUserLogsWithDateAndPage() {
-        MoPaaSInVo in = new MoPaaSInVo();
-        in.setMethod("GET");
-        in.setUri("/api/v2/base/logs/all/2015-01-01/2015-06-30/1/3");
-        
-        MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
-
-        Assert.assertEquals("API_0", out.getCode());
-        Assert.assertNotNull(out.getList());
-    }
-
 }
