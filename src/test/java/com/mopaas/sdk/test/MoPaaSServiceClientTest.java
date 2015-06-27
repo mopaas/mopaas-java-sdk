@@ -16,6 +16,8 @@
 // under the License.
 package com.mopaas.sdk.test;
 
+import java.io.UnsupportedEncodingException;
+
 import junit.framework.Assert;
 
 import org.junit.After;
@@ -25,7 +27,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.mopaas.sdk.MoPaaSClient;
-import com.mopaas.sdk.utils.UrlCodingUtils;
 import com.mopaas.sdk.vo.MoPaaSInVo;
 import com.mopaas.sdk.vo.MoPaaSOutVo;
 
@@ -52,6 +53,7 @@ public class MoPaaSServiceClientTest {
     public void tearDown() throws Exception {
     }
 
+    // test
     MoPaaSClient client = MoPaaSClient.newClient("968f6de8-117b-4236-b10e-25e790a198b7", "1c2c4861-ca1e-4f05-97b8-e7d5a4f2d232");
 
     @Test
@@ -81,10 +83,10 @@ public class MoPaaSServiceClientTest {
     }
 
     @Test
-    public void testServiceCreate() {
+    public void testServiceCreate() throws UnsupportedEncodingException {
         MoPaaSInVo in = new MoPaaSInVo();
         in.setMethod("GET");
-        in.setUri("/api/v2/service/MySQL/mysql0626/" + UrlCodingUtils.encodeBase64("MySQL 125M".getBytes()) + "/create");
+        in.setUri("/api/v2/service/mysql0626/72/create");
         
         MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
 
@@ -92,10 +94,10 @@ public class MoPaaSServiceClientTest {
     }
 
     @Test
-    public void testServiceUpgrade() {
+    public void testServiceUpgrade() throws UnsupportedEncodingException {
         MoPaaSInVo in = new MoPaaSInVo();
         in.setMethod("GET");
-        in.setUri("/api/v2/service/mysql0626/" + UrlCodingUtils.encodeBase64("MySQL 250M".getBytes()) + "/upgrade");
+        in.setUri("/api/v2/service/mysql0626/75/upgrade");
         
         MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
 
