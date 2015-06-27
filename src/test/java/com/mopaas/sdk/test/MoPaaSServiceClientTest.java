@@ -139,6 +139,20 @@ public class MoPaaSServiceClientTest {
     }
 
     @Test
+    public void testServiceCredentials() {
+        MoPaaSInVo in = new MoPaaSInVo();
+        in.setMethod("GET");
+        in.setUri("/api/v2/service/dd2ce6bd-b6ad-4250-93dd-4a8ff76a24ff/fc894f51-00cd-4114-a7c1-0547b81e77bc/credentials");
+        
+        MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
+
+        Assert.assertEquals("API_0", out.getCode());
+        Assert.assertNull(out.getList());
+        Assert.assertNotNull(out.getResult());
+
+    }
+
+    @Test
     public void testServiceDelete() {
         MoPaaSInVo in = new MoPaaSInVo();
         in.setMethod("DELETE");

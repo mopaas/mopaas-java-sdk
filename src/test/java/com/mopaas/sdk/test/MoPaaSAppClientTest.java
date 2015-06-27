@@ -343,7 +343,7 @@ public class MoPaaSAppClientTest {
         
         appGuid = (String)out.getResult().get("guid");
 
-         in = new MoPaaSInVo();
+        in = new MoPaaSInVo();
         in.setMethod("GET");
         in.setUri("/api/v2/app/request/" + appGuid + "/24");
         
