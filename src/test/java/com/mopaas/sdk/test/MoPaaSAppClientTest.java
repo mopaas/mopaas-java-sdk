@@ -53,7 +53,8 @@ public class MoPaaSAppClientTest {
     public void tearDown() throws Exception {
     }
 
-    MoPaaSClient client = MoPaaSClient.newClient("968f6de8-117b-4236-b10e-25e790a198b7", "1c2c4861-ca1e-4f05-97b8-e7d5a4f2d232");
+   MoPaaSClient client = MoPaaSClient.newClient("968f6de8-117b-4236-b10e-25e790a198b7", "1c2c4861-ca1e-4f05-97b8-e7d5a4f2d232");
+   
     
     @Test
     public void testAppTypes() {
@@ -157,7 +158,7 @@ public class MoPaaSAppClientTest {
         Assert.assertNotNull(out.getList());
         Assert.assertNull(out.getResult());
     }
-
+    
     @Test
     public void testAppStart() {
         MoPaaSInVo in = new MoPaaSInVo();
@@ -359,7 +360,7 @@ public class MoPaaSAppClientTest {
         MoPaaSInVo in = new MoPaaSInVo();
         in.setMethod("DELETE");
         in.setUri("/api/v2/app/php0626");
-        
+
         MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
 
         Assert.assertEquals("API_0", out.getCode());
@@ -367,4 +368,29 @@ public class MoPaaSAppClientTest {
         Assert.assertNull(out.getResult());
     }
 
+    @Test
+    public void testAppPackagesCreate() {
+        MoPaaSInVo in = new MoPaaSInVo();
+        in.setMethod("GET");
+        in.setUri("/api/v2/app/package/php0626/v1/create");
+        
+        MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
+  
+        Assert.assertEquals("API_0", out.getCode());
+        Assert.assertNull(out.getResult());
+    }
+    
+    
+    
+    @Test
+    public void testAppPackagesDelete() {
+        MoPaaSInVo in = new MoPaaSInVo();
+        in.setMethod("DELETE");
+        in.setUri("/api/v2/app/package/php0626/v1/delete");
+
+		MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
+    
+        Assert.assertEquals("API_0", out.getCode());
+        Assert.assertNull(out.getResult());
+    }
 }

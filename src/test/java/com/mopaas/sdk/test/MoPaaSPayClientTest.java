@@ -26,6 +26,7 @@ import org.junit.Test;
 
 import com.mopaas.sdk.MoPaaSClient;
 import com.mopaas.sdk.vo.MoPaaSInVo;
+import com.mopaas.sdk.vo.MoPaaSOut2Vo;
 import com.mopaas.sdk.vo.MoPaaSOutVo;
 
 /**
@@ -52,7 +53,7 @@ public class MoPaaSPayClientTest {
     }
 
     MoPaaSClient client = MoPaaSClient.newClient("968f6de8-117b-4236-b10e-25e790a198b7", "1c2c4861-ca1e-4f05-97b8-e7d5a4f2d232");
-
+    
     @Test
     public void testBalance() {
         MoPaaSInVo in = new MoPaaSInVo();
@@ -90,5 +91,17 @@ public class MoPaaSPayClientTest {
         Assert.assertEquals("API_0", out.getCode());
         Assert.assertNotNull(out.getList());
         Assert.assertNull(out.getResult());
+    }
+    
+    @Test
+    public void testBugdet() {
+        MoPaaSInVo in = new MoPaaSInVo();
+        in.setMethod("GET");
+        in.setUri("/api/v2/pay/bugdet");
+        
+        MoPaaSOut2Vo out = client.exec(in, MoPaaSOut2Vo.class);
+
+        Assert.assertEquals("API_0", out.getCode());
+        Assert.assertNotNull(out.getResult());
     }
 }
