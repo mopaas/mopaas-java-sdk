@@ -51,7 +51,7 @@
   * [Balances] (#balances)
   * [Payments] (#payments)
   * [Balance details] (#balancedetails)
-  * [Budget] (#budget)  
+  * [Bugdet] (#bugdet)  
 ---
 
 <a name="准备"></a>
@@ -615,8 +615,8 @@
         Assert.assertNotNull(out.getList());
         Assert.assertNull(out.getResult());
         
-<a name="budget"></a>
-#### Budget
+<a name="bugdet"></a>
+#### Bugdet
 
 消费预估
 
