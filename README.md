@@ -21,6 +21,8 @@
   * [Upgrade app] (#upgradeapp)
   * [App list] (#applist)
   * [App details] (#apptdetails)
+  * [Create package version] (#createpackage)
+  * [Delete package version] (#deletepackage)
   * [Upload package] (#uploadpackage)
   * [Package list] (#packagelist)
   * [Deploy app] (#deployapp)
@@ -49,7 +51,7 @@
   * [Balances] (#balances)
   * [Payments] (#payments)
   * [Balance details] (#balancedetails)
-
+  * [Bugdet] (#bugdet)
 ---
 
 <a name="准备"></a>
@@ -232,6 +234,30 @@
         Assert.assertNotNull(out.getResult());
         Assert.assertEquals("php0626", out.getResult().get("name"));
 
+<a name="createpackage"></a>
+#### Create package version
+
+代码包创建
+
+        MoPaaSInVo in = new MoPaaSInVo();
+        in.setMethod("GET");
+         in.setUri("/api/v2/app/package/php0626/v1/create");
+        MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
+        Assert.assertEquals("API_0", out.getCode());
+        Assert.assertNotNull(out.getResult());
+        
+<a name="deletepackage"></a>
+#### Delete package version
+
+代码包删除
+
+        MoPaaSInVo in = new MoPaaSInVo();
+        in.setMethod("DELETE");
+        in.setUri("/api/v2/app/package/php0626/v1/");
+        MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
+        Assert.assertEquals("API_0", out.getCode());
+        Assert.assertNotNull(out.getResult());
+        
 <a name="uploadpackage"></a>
 #### Upload package
 
@@ -587,6 +613,18 @@
         MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
         Assert.assertEquals("API_0", out.getCode());
         Assert.assertNotNull(out.getList());
+        Assert.assertNull(out.getResult());
+        
+<a name="bugdet"></a>
+#### Bugdet
+
+消费预估
+
+        MoPaaSInVo in = new MoPaaSInVo();
+        in.setMethod("GET");
+        in.setUri("/api/v2/pay/bugdet");
+        MoPaaSOut2Vo out = client.exec(in, MoPaaSOut2Vo.class);
+        Assert.assertEquals("API_0", out.getCode());
         Assert.assertNull(out.getResult());
 
 ---

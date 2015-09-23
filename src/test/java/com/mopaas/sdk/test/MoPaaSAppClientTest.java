@@ -386,7 +386,7 @@ public class MoPaaSAppClientTest {
     public void testAppPackagesDelete() {
         MoPaaSInVo in = new MoPaaSInVo();
         in.setMethod("DELETE");
-        in.setUri("/api/v2/app/package/php0626/v1/delete");
+        in.setUri("/api/v2/app/package/php0626/v1/");
 
 		MoPaaSOutVo out = client.exec(in, MoPaaSOutVo.class);
     
